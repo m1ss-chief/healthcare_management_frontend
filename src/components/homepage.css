@@ -1,0 +1,30 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+.container {
+    padding-top: 50px;
+    text-align: center;
+}
+.card {
+    margin-top: 30px;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 1);
+}
+.card-title {
+    font-size: 24px;
+}
+.card-text {
+    font-size: 16px;
+}
+.btn-custom {
+    padding: 15px 30px;
+    font-size: 18px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+.btn-custom:hover {
+    transform: translateY(-5px);
+}

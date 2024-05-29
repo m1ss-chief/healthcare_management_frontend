@@ -1,0 +1,32 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+}
+.container {
+    max-width: 600px;
+    margin: auto;
+    padding-top: 50px;
+}
+.card {
+    padding: 20px;
+    border: none;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+.btn-custom {
+    padding: 10px 20px;
+    font-size: 16px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+.btn-custom:hover {
+    transform: translateY(-5px);
+}
+#response {
+    margin-top: 20px;
+    font-size: 16px;
+    color: #28a745;
+}
