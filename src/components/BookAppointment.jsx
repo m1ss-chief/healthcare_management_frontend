@@ -3,7 +3,7 @@ import React, { useState } from 'react'
 import { Container, Card, Form, Button, Alert, Stack } from 'react-bootstrap';
 import { bookAppointment, queryAppointment } from '../api/api';
 const BookAppointment = () => {
-
+    const [isLoading, setIsLoading] = useState(false);
     const [pdetails,setPDetails]=useState({
         patient_id: undefined,
         doctor_id: undefined,
@@ -13,7 +13,11 @@ const BookAppointment = () => {
         doctorid:0
     })
     const [responseMessage, setResponseMessage] = useState('');
-    const [queryMessage, setQueryMessage] = useState([]);
+    const [queryMessage, setQueryMessage] = useState({
+        name:"",
+        speciality:"",
+        available_slots:[]
+    });
     const [shoulsshowsot, setShoulsshowsot] = useState(false);
     const [isrestrue, setIsrestrue] = useState(false);
     // const [queryMessage, setQueryMessage] = useState('');
@@ -36,7 +40,7 @@ const BookAppointment = () => {
         e.preventDefault();
         console.log(pdetails);
         const res= await bookAppointment(pdetails);
-
+        setIsLoading(true);
         // const responseMessage = `Providing information for medicine: ${medicineName}`;
         if (res.success){
 
@@ -47,6 +51,7 @@ const BookAppointment = () => {
             setResponseMessage("Appointment not booked successfully");
             setIsrestrue(false);
         }
+        setIsLoading(false);
     };
 
     const handleQuerySubmit = async(e) => {
@@ -55,7 +60,10 @@ const BookAppointment = () => {
         const res= await queryAppointment(doc.doctorid);
         console.log(res);
         setShoulsshowsot(true)
-        setQueryMessage(res.available_slots);
+        
+        setQueryMessage((prev)=>{
+            return {name:res.name,available_slots:res.available_slots,speciality:res.speciality}
+        });
         // const responseMessage = `Providing information for medicine: ${medicineName}`;
         // setResponseMessage(responseMessage);
     };
@@ -86,12 +94,21 @@ const BookAppointment = () => {
                     </Form>
                     {shoulsshowsot && (
                     <Alert variant="success" className="mt-4">
-                        <div>Available Slots</div>
+                        {/* <div>Available Slots</div> */}
                         <div className='d-flex gap-2'>
                 
-                        {queryMessage.map((slot)=>{
-                            return (<div style={{backgroundColor:'white',padding:"3px 6px", borderRadius:"8px"}}>{slot}</div>)
-                        })}
+                        {/* {queryMessage.map((res,i)=>{ */}
+                            {/* return ( */}
+
+                            <div  >
+                                <div>Name: {queryMessage.name}</div>
+                                <div>Speciality: {queryMessage.speciality}</div>
+                                <div style={{display:'flex' ,flexDirection:'row', gap:4}}>Available Slots: {queryMessage.available_slots.map((slot)=>{
+                                    return <span key={slot} style={{backgroundColor:'white',padding:"3px 6px", borderRadius:"8px"}}>{slot}</span>
+                                })}</div>
+                            </div>
+                        {/* ) */}
+                        {/* })} */}
                         </div>
                     </Alert>
                 )}
@@ -138,6 +155,7 @@ const BookAppointment = () => {
                         variant="primary"
                         // onClick={submitForm}
                         type='submit'
+                        disabled={isLoading}
                     >
                         Submit
                     </Button>

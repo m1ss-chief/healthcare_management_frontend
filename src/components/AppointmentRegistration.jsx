@@ -25,6 +25,7 @@ const AppointmentRegistration = () => {
 
     const [responseMessage, setResponseMessage] = useState('');
     const [showBtn, setShowBtn] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -37,11 +38,13 @@ const AppointmentRegistration = () => {
     const handleSubmit =async (e) => {
         e.preventDefault();
         console.log(formData);
+        setIsLoading(true)
         const res= await registerPatient(formData);
         if(res.success){
             setResponseMessage(`Patient registered with Patient Id ${res.patient_id}`);
             setShowBtn(true);
         }
+        setIsLoading(false)
         // navigate("/appointments");
     };
 
@@ -100,6 +103,7 @@ const AppointmentRegistration = () => {
                         variant="primary"
                         // onClick={submitForm}
                         type='submit'
+                        disabled={isLoading===true}
                     >
                         Register
                     </Button>
